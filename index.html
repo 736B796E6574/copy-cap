@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div class="upload-container">
+      <img
+        src="assets/copycap.jpg
+    "
+      />
+      <h1>Welcome to CopyCap</h1>
+
+      <h2>Upload two files for comparison:</h2>
+      <form id="uploadForm">
+        <label for="file1" class="custom-file-upload">
+            <input class="file-input" type="file" id="file1" name="file1" />
+            <span>Upload File 1</span>
+          </label>
+          
+          <label for="file2" class="custom-file-upload">
+            <input class="file-input" type="file" id="file2" name="file2" />
+            <span>Upload File 2</span>
+          </label>
+          
+        <button type="button" onclick="compareFiles()">Compare</button>
+      </form>
+      <div id="result"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
