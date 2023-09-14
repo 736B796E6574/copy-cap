@@ -3,7 +3,8 @@ import re
 
 # Tokenization
 def tokenize(text):
-    return re.findall(r'\b\w+\b', text)
+    return re.findall(r'\w+|[.,!?;]', text)
+
 
 # Generating k-grams
 def kgrams(tokens, k):
@@ -25,19 +26,26 @@ def winnow(hashes, w):
 def normalize_code(code):
     tree = ast.parse(code)
     
-    # Rename variables consistently
+    # Rename variables, functions, classes, and constants consistently
     for node in ast.walk(tree):
         if isinstance(node, ast.Name):
             node.id = 'VAR'
-    
+        elif isinstance(node, ast.FunctionDef):
+            node.name = 'FUNC'
+        elif isinstance(node, ast.ClassDef):
+            node.name = 'CLASS'
+        elif isinstance(node, (ast.Num, ast.Str)):
+            node.n = 'CONST'
+
     # Dump the modified AST back to a code string
     normalized_code = ast.dump(tree)
     
     # Return normalized code without comments and whitespaces
     return ''.join(normalized_code.split())
 
+
 # Main function to compute plagiarism score
-def plagiarism_score(file1, file2, k=50, w=30):
+def plagiarism_score(file1, file2, k=2, w=3):
     with open(file1, 'r') as f:
         code1 = f.read()
         normalized1 = normalize_code(code1)
